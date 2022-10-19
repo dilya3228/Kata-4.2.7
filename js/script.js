@@ -13,11 +13,10 @@ searchInput.addEventListener('input', () => {
 })
 
 autocomplete.addEventListener('click', (event) => {
-    if (event.target.className === 'app__autocomplete-item') {
-        addSearchResultItem(event.target.dataset);
-        searchInput.value = '';
-        clearAutocomplete();
-    }
+    if (event.target.className !== 'app__autocomplete-item') return
+    addSearchResultItem(event.target.dataset);
+    searchInput.value = '';
+    clearAutocomplete();
 })
 
 searchResult.addEventListener('click', (event) => {
@@ -40,7 +39,7 @@ function clearAutocomplete() {
 }
 
 function createAutocompleteItem(dataset) {
-    let item = document.createElement('li');
+    let item = document.createElement('button');
     item.classList.add('app__autocomplete-item');
     item.textContent = dataset.name;
     item.dataset.name = dataset.name;
@@ -50,10 +49,10 @@ function createAutocompleteItem(dataset) {
 }
 
 function addSearchResultItem(dataset) {
-    let item = document.createElement('li');
+    let item = document.createElement('button');
     item.classList.add('app__search-result-item');
     item.innerHTML = `Name: ${dataset.name}<br>Owner: ${dataset.owner}<br>Stars: ${dataset.stars}`;
-    let remove = document.createElement('span');
+    let remove = document.createElement('button');
     remove.classList.add('app__search-result-remove');
     remove.textContent = '❌';
     item.appendChild(remove);
